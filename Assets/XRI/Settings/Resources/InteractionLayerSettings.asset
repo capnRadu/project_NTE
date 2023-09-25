@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_LayerNames:
   - Default
-  - 
-  - 
-  - 
+  - teleport
+  - direct interaction
+  - ray interaction
   - 
   - 
   - 
