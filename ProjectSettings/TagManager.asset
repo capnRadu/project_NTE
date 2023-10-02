@@ -6,6 +6,10 @@ TagManager:
   tags:
   - Left Hand
   - Right Hand
+  - Capsule
+  - Cube
+  - Cylinder
+  - Sphere
   layers:
   - Default
   - TransparentFX
