@@ -11,6 +11,7 @@ TagManager:
   - Cylinder
   - Sphere
   - Customer
+  - Spawner
   layers:
   - Default
   - TransparentFX

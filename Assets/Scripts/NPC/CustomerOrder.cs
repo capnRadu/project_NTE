@@ -16,11 +16,15 @@ public class CustomerOrder : MonoBehaviour
     private float moveSpeed = 0.5f;
     private string state;
 
+    CustomerSpawner customersList;
+    private int customerIndex;
+
     private void Start()
     {
-        int i = Random.Range(0, orderRecipes.Length);
-        currentRecipe = orderRecipes[i];
+        currentRecipe = orderRecipes[Random.Range(0, orderRecipes.Length)];
         StartCoroutine(ChangeState("spawn"));
+        customersList = GameObject.FindWithTag("Spawner").GetComponent<CustomerSpawner>();
+        customerIndex = customersList.customers.Count - 1;
     }
 
     private void Update()
@@ -28,7 +32,11 @@ public class CustomerOrder : MonoBehaviour
         switch (state)
         {
             case "spawn":
-                if (Vector3.Distance(transform.position, GameObject.FindGameObjectWithTag("Customer").transform.position) < 0.1f)
+                if (customerIndex == 0 || (!customersList.customers[customerIndex - 1] && customerIndex > 0))
+                {
+                    transform.position = Vector3.MoveTowards(transform.position, waypoints[0].transform.position, moveSpeed * Time.deltaTime);
+                } 
+                else if (Vector3.Distance(customersList.customers[customerIndex].transform.position, customersList.customers[customerIndex - 1].transform.position) > .8f)
                 {
                     transform.position = Vector3.MoveTowards(transform.position, waypoints[0].transform.position, moveSpeed * Time.deltaTime);
                 }
@@ -44,7 +52,6 @@ public class CustomerOrder : MonoBehaviour
 
                     state = "order";
                 }
-
                 break;
 
             case "destroy":
@@ -55,7 +62,6 @@ public class CustomerOrder : MonoBehaviour
                     Destroy(currentText.gameObject);
                     Destroy(this.gameObject);
                 }
-
                 break;
         }
 

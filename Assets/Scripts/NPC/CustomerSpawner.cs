@@ -5,19 +5,21 @@ using UnityEngine;
 public class CustomerSpawner : MonoBehaviour
 {
     [SerializeField] private GameObject customerPrefab;
+    public List<GameObject> customers = new List<GameObject>();
 
     void Start()
     {
-        InvokeRepeating("SpawnCustomer", 1f, 20f);
+        InvokeRepeating("SpawnCustomer", 2f, 10f);
     }
 
     private void SpawnCustomer()
     {
-        var getCount = GameObject.FindGameObjectsWithTag("Customer");
+        var getCustomersCount = GameObject.FindGameObjectsWithTag("Customer");
 
-        if(getCount.Length <= 1)
+        if (getCustomersCount.Length < 4)
         {
-            Instantiate(customerPrefab);
+            GameObject newCustomer = (GameObject)Instantiate(customerPrefab, transform.position, Quaternion.identity);
+            customers.Add(newCustomer);
         }
     }
 }
