@@ -13,6 +13,11 @@ public class CustomerSpawner : MonoBehaviour
 
     private void SpawnCustomer()
     {
-        Instantiate(customerPrefab);
+        var getCount = GameObject.FindGameObjectsWithTag("Customer");
+
+        if(getCount.Length <= 1)
+        {
+            Instantiate(customerPrefab);
+        }
     }
 }

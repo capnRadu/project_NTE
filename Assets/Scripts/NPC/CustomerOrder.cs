@@ -20,7 +20,6 @@ public class CustomerOrder : MonoBehaviour
     {
         int i = Random.Range(0, orderRecipes.Length);
         currentRecipe = orderRecipes[i];
-        //customerText.text = currentRecipe;
         StartCoroutine(ChangeState("spawn"));
     }
 
@@ -29,7 +28,10 @@ public class CustomerOrder : MonoBehaviour
         switch (state)
         {
             case "spawn":
-                transform.position = Vector3.MoveTowards(transform.position, waypoints[0].transform.position, moveSpeed * Time.deltaTime);
+                if (Vector3.Distance(transform.position, GameObject.FindGameObjectWithTag("Customer").transform.position) < 0.1f)
+                {
+                    transform.position = Vector3.MoveTowards(transform.position, waypoints[0].transform.position, moveSpeed * Time.deltaTime);
+                }
 
                 if (Vector3.Distance(transform.position, waypoints[0].transform.position) < .2f)
                 {
