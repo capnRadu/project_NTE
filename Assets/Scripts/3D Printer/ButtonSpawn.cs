@@ -12,10 +12,12 @@ public class ButtonSpawn : MonoBehaviour
     [SerializeField] private UnityEvent onRelease;
     private GameObject presser;
     private bool isPressed;
+    InstantiateLimit instantiateLimit;
 
     private void Start()
     {
         isPressed = false;
+        instantiateLimit = spawnPoint.GetComponent<InstantiateLimit>();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -41,6 +43,9 @@ public class ButtonSpawn : MonoBehaviour
 
     public void SpawnObject()
     {
-        GameObject newObject = Instantiate(prefabObject, spawnPoint.transform.position, Quaternion.identity);
+        if (!instantiateLimit.isInstantiated)
+        {
+            GameObject newObject = Instantiate(prefabObject, spawnPoint.transform.position, Quaternion.identity);
+        }
     }
 }

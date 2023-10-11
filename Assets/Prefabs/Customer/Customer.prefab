@@ -115,7 +115,7 @@ MonoBehaviour:
   - Sphere
   - Cylinder
   - Capsule
+  orderRecipesIndex: 0000000000000000000000000000000000000000
   waypoints:
   - {fileID: 3590984619926047015, guid: 45348899bcc9e564e8df5d306db31ffd, type: 3}
   - {fileID: 1521103161109537313, guid: b156c511d5bd25c49a7641a47b0de710, type: 3}
-  CustomerSpawnerObject: {fileID: 7246336861720067181, guid: 2f966e86220a9e9438dffc14f66aae53, type: 3}
