@@ -9,7 +9,7 @@ public class CustomerSpawner : MonoBehaviour
 
     void Start()
     {
-        InvokeRepeating("SpawnCustomer", 2f, 30f);
+        InvokeRepeating("SpawnCustomer", 2f, 15f);
     }
 
     private void SpawnCustomer()

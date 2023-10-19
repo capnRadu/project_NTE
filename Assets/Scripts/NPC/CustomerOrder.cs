@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.Video;
 
 public class CustomerOrder : MonoBehaviour
@@ -21,6 +22,11 @@ public class CustomerOrder : MonoBehaviour
 
     CustomerSpawner customersList;
     private int customerIndex;
+
+    [SerializeField] private GameObject timerBar;
+    TimerBar timerBarScript;
+    private float orderTimer = 20f;
+    private GameObject newTimer;
 
     private void Start()
     {
@@ -44,6 +50,8 @@ public class CustomerOrder : MonoBehaviour
         StartCoroutine(ChangeState("spawn"));
         customersList = GameObject.FindWithTag("Spawner").GetComponent<CustomerSpawner>();
         customerIndex = customersList.customers.Count - 1;
+
+        timerBarScript = timerBar.GetComponent<TimerBar>();
     }
 
     private void Update()
@@ -92,7 +100,21 @@ public class CustomerOrder : MonoBehaviour
                     _text.transform.localScale = Vector3.one;
                     currentText = _text;
 
+                    newTimer = Instantiate(timerBar, this.transform.position + new Vector3(0f, 0.7f, 0f), Quaternion.identity) as GameObject;
+                    // timerBarScript.maxTime = orderTimer;
+                    newTimer.transform.SetParent(_canvas.transform, true);
+                    newTimer.transform.localScale = Vector3.one;
+
                     state = "order";
+                }
+                break;
+
+            case "order":
+                if (newTimer.GetComponent<TimerBar>().timerBar.fillAmount <= 0)
+                {
+                    state = "destroy";
+                    currentText.text = ":(";
+                    Destroy(newTimer.gameObject);
                 }
                 break;
 

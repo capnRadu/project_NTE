@@ -119,3 +119,4 @@ MonoBehaviour:
   waypoints:
   - {fileID: 3590984619926047015, guid: 45348899bcc9e564e8df5d306db31ffd, type: 3}
   - {fileID: 1521103161109537313, guid: b156c511d5bd25c49a7641a47b0de710, type: 3}
+  timerBar: {fileID: 1260344446945109784, guid: f40836aa437850e4994475a352eab772, type: 3}
