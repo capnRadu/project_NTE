@@ -70,7 +70,7 @@ public class CustomerOrder : MonoBehaviour
 
                 if (Vector3.Distance(transform.position, waypoints[0].transform.position) < .2f)
                 {
-                    var _canvas = GameObject.Find("Canvas").GetComponent<Canvas>();
+                    var _canvas2 = GameObject.Find("Canvas 2").GetComponent<Canvas>();
                     var _text = Instantiate(customerText, this.transform.position + new Vector3(0f, 0.5f, 0f), Quaternion.identity) as TextMeshProUGUI;
                     // _text.text = currentRecipe;
 
@@ -96,13 +96,13 @@ public class CustomerOrder : MonoBehaviour
                         }
                     }
 
-                    _text.transform.SetParent(_canvas.transform, true);
+                    _text.transform.SetParent(_canvas2.transform, true);
                     _text.transform.localScale = Vector3.one;
                     currentText = _text;
 
                     newTimer = Instantiate(timerBar, this.transform.position + new Vector3(0f, 0.7f, 0f), Quaternion.identity) as GameObject;
                     // timerBarScript.maxTime = orderTimer;
-                    newTimer.transform.SetParent(_canvas.transform, true);
+                    newTimer.transform.SetParent(_canvas2.transform, true);
                     newTimer.transform.localScale = Vector3.one;
 
                     state = "order";
@@ -110,7 +110,7 @@ public class CustomerOrder : MonoBehaviour
                 break;
 
             case "order":
-                if (newTimer.GetComponent<TimerBar>().timerBar.fillAmount <= 0)
+                if (newTimer && newTimer.GetComponent<TimerBar>().timerBar.fillAmount <= 0)
                 {
                     state = "destroy";
                     currentText.text = ":(";
@@ -142,6 +142,7 @@ public class CustomerOrder : MonoBehaviour
             currentText.text = ":)";
             Destroy(collision.gameObject);
             StartCoroutine(ChangeState("destroy"));
+            Destroy(newTimer.gameObject);
         }
     }
 
