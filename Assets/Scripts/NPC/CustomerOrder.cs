@@ -28,8 +28,24 @@ public class CustomerOrder : MonoBehaviour
     private float orderTimer = 20f;
     private GameObject newTimer;
 
+    private Animator modelAnimator;
+
     private void Start()
     {
+        int randomModelNumber = Random.Range(0, transform.childCount);
+        for (int j = 0; j < transform.childCount; j++)
+        {
+            if (j != randomModelNumber)
+            {
+                Destroy(transform.GetChild(j).gameObject);
+            }
+            else
+            {
+                transform.GetChild(j).gameObject.SetActive(true);
+                modelAnimator = transform.GetChild(j).gameObject.GetComponent<Animator>();
+            }
+        }
+
         // currentRecipe = orderRecipes[Random.Range(0, orderRecipes.Length)];
         for (int i = 0; i < orderRecipesIndex.Length; i++)
         {
@@ -47,7 +63,7 @@ public class CustomerOrder : MonoBehaviour
         }
         Debug.Log(currentRecipeIndex);
 
-        StartCoroutine(ChangeState("spawn"));
+        StartCoroutine(ChangeState("spawn", true, false));
         customersList = GameObject.FindWithTag("Spawner").GetComponent<CustomerSpawner>();
         customerIndex = customersList.customers.Count - 1;
 
@@ -62,16 +78,22 @@ public class CustomerOrder : MonoBehaviour
                 if (customerIndex == 0 || (!customersList.customers[customerIndex - 1] && customerIndex > 0))
                 {
                     transform.position = Vector3.MoveTowards(transform.position, waypoints[0].transform.position, moveSpeed * Time.deltaTime);
+                    modelAnimator.SetBool("isWalking", true);
                 } 
                 else if (Vector3.Distance(customersList.customers[customerIndex].transform.position, customersList.customers[customerIndex - 1].transform.position) > .8f)
                 {
                     transform.position = Vector3.MoveTowards(transform.position, waypoints[0].transform.position, moveSpeed * Time.deltaTime);
+                    modelAnimator.SetBool("isWalking", true);
+                }
+                else
+                {
+                    modelAnimator.SetBool("isWalking", false);
                 }
 
                 if (Vector3.Distance(transform.position, waypoints[0].transform.position) < .2f)
                 {
                     var _canvas2 = GameObject.Find("Canvas 2").GetComponent<Canvas>();
-                    var _text = Instantiate(customerText, this.transform.position + new Vector3(0f, 0.5f, 0f), Quaternion.identity) as TextMeshProUGUI;
+                    var _text = Instantiate(customerText, this.transform.position, Quaternion.identity) as TextMeshProUGUI;
                     // _text.text = currentRecipe;
 
                     for (int i = 0; i < orderRecipesIndex.Length; i++)
@@ -100,12 +122,13 @@ public class CustomerOrder : MonoBehaviour
                     _text.transform.localScale = Vector3.one;
                     currentText = _text;
 
-                    newTimer = Instantiate(timerBar, this.transform.position + new Vector3(0f, 0.7f, 0f), Quaternion.identity) as GameObject;
+                    newTimer = Instantiate(timerBar, this.transform.position + new Vector3(0f, 1.25f, 0f), Quaternion.identity) as GameObject;
                     // timerBarScript.maxTime = orderTimer;
                     newTimer.transform.SetParent(_canvas2.transform, true);
                     newTimer.transform.localScale = Vector3.one;
 
                     state = "order";
+                    modelAnimator.SetBool("isWalking", false);
                 }
                 break;
 
@@ -113,6 +136,8 @@ public class CustomerOrder : MonoBehaviour
                 if (newTimer && newTimer.GetComponent<TimerBar>().timerBar.fillAmount <= 0)
                 {
                     state = "destroy";
+                    modelAnimator.SetBool("isWalking", true);
+                    this.transform.rotation = Quaternion.Euler(0, -90, 0);
                     currentText.text = ":(";
                     Destroy(newTimer.gameObject);
                 }
@@ -141,14 +166,20 @@ public class CustomerOrder : MonoBehaviour
         {
             currentText.text = ":)";
             Destroy(collision.gameObject);
-            StartCoroutine(ChangeState("destroy"));
+            StartCoroutine(ChangeState("destroy", true, true));
             Destroy(newTimer.gameObject);
         }
     }
 
-    IEnumerator ChangeState(string newState)
+    IEnumerator ChangeState(string newState, bool isWalking, bool rotate)
     {
         yield return new WaitForSeconds(1f);
         state = newState;
+        modelAnimator.SetBool("isWalking", isWalking);
+
+        if (rotate)
+        {
+            this.transform.rotation = Quaternion.Euler(0, -90, 0);
+        }
     }
 }
