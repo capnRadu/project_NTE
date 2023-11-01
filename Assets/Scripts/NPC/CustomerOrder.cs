@@ -110,9 +110,15 @@ public class CustomerOrder : MonoBehaviour
                                 _text.text += "Cheese x" + orderRecipesIndex[i] + " ";
                                 break;
                             case 3:
-                                _text.text += "Bacon x" + orderRecipesIndex[i] + "\n";
+                                _text.text += "Tomatoes x" + orderRecipesIndex[i] + "\n";
                                 break;
                             case 4:
+                                _text.text += "Onions x" + orderRecipesIndex[i] + "\n";
+                                break;
+                            case 5:
+                                _text.text += "Salad x" + orderRecipesIndex[i] + "\n";
+                                break;
+                            case 6:
                                 _text.text += "Top Bun x" + orderRecipesIndex[i] + "\n";
                                 break;
                         }

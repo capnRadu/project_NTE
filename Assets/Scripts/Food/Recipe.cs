@@ -8,18 +8,29 @@ public class Recipe : MonoBehaviour
     [SerializeField] private GameObject topBunPrefab;
     private int topBunIndex = 1;
 
-    [SerializeField] private GameObject pattyPrefab;
-    private int baconIndex = 10;
+    [SerializeField] private GameObject saladPrefab;
+    private int saladIndex = 10;
+
+    [SerializeField] private GameObject onionsPrefab;
+    private int onionsIndex = 100;
+
+    [SerializeField] private GameObject tomatoesPrefab;
+    private int tomatoesIndex = 1000;
 
     [SerializeField] private GameObject cheesePrefab;
-    private int cheeseIndex = 100;
+    private int cheeseIndex = 10000;
 
-    [SerializeField] private GameObject baconPrefab;
-    private int pattyIndex = 1000;
+    [SerializeField] private GameObject pattyPrefab;
+    private int pattyIndex = 100000;
 
-    public int orderIndex = 10000;
+    public int orderIndex = 1000000;
 
-    private float spacing = 0f;
+    private float spacing;
+
+    private void Start()
+    {
+        spacing = GetComponent<BoxCollider>().size.y / 2;
+    }
 
     private void OnCollisionEnter(Collision collision)
     {
@@ -44,22 +55,38 @@ public class Recipe : MonoBehaviour
             Debug.Log("orderIndex " + orderIndex);
         }
 
-        if (collision.gameObject.CompareTag("Bacon"))
+        if (collision.gameObject.CompareTag("Salad"))
         {
-            AddIngredient(baconPrefab, collision);
-            orderIndex += baconIndex;
+            AddIngredient(saladPrefab, collision);
+            orderIndex += saladIndex;
+            Debug.Log("orderIndex " + orderIndex);
+        }
+
+        if (collision.gameObject.CompareTag("Onions"))
+        {
+            AddIngredient(onionsPrefab, collision);
+            orderIndex += onionsIndex;
+            Debug.Log("orderIndex " + orderIndex);
+        }
+
+        if (collision.gameObject.CompareTag("Tomatoes"))
+        {
+            AddIngredient(tomatoesPrefab, collision);
+            orderIndex += tomatoesIndex;
             Debug.Log("orderIndex " + orderIndex);
         }
     }
 
     protected void AddIngredient(GameObject ingredientPrefab, Collision collision)
     {
-        GameObject newIngredient = (GameObject)Instantiate(ingredientPrefab, transform.position + new Vector3(0, collision.transform.localScale.y + spacing, 0), transform.rotation);
+        spacing += collision.gameObject.GetComponent<BoxCollider>().size.y / 2;
+
+        GameObject newIngredient = (GameObject)Instantiate(ingredientPrefab, transform.position + new Vector3(0, spacing, 0), transform.rotation);
         newIngredient.transform.parent = transform;
         GetComponent<BoxCollider>().center += new Vector3(0, collision.gameObject.GetComponent<BoxCollider>().size.y / 2, 0);
         GetComponent<BoxCollider>().size += new Vector3(0, collision.gameObject.GetComponent<BoxCollider>().size.y, 0);
         
-        spacing += collision.transform.localScale.y;
+        spacing += collision.gameObject.GetComponent<BoxCollider>().size.y / 2;
 
         Destroy(collision.gameObject);
     }

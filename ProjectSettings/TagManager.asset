@@ -18,6 +18,9 @@ TagManager:
   - Top Bun
   - Cheese
   - Bacon
+  - Onions
+  - Salad
+  - Tomatoes
   layers:
   - Default
   - TransparentFX
