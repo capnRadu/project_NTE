@@ -21,6 +21,8 @@ TagManager:
   - Onions
   - Salad
   - Tomatoes
+  - Sausage
+  - Hotdog Bun
   layers:
   - Default
   - TransparentFX
