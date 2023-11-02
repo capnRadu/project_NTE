@@ -8,7 +8,7 @@ public class TimerBar : MonoBehaviour
 {
     public Image timerBar;
 
-    public float maxTime = 60f;
+    public float maxTime = 50f;
     private float timeLeft;
 
     private void Start()

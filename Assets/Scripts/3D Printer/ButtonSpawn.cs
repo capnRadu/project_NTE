@@ -8,21 +8,24 @@ public class ButtonSpawn : MonoBehaviour
     [SerializeField] private GameObject button;
     [SerializeField] private Transform spawnPoint;
     [SerializeField] private GameObject prefabObject;
+    [SerializeField] private GameObject printer;
     [SerializeField] private UnityEvent onPress;
     [SerializeField] private UnityEvent onRelease;
+    InstantiateLimit instantiateLimit;
+    PrinterDamage printerDamage;
     private GameObject presser;
     private bool isPressed;
-    InstantiateLimit instantiateLimit;
 
     private void Start()
     {
         isPressed = false;
         instantiateLimit = spawnPoint.GetComponent<InstantiateLimit>();
+        printerDamage = printer.GetComponent<PrinterDamage>();
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (!isPressed)
+        if (!isPressed && (other.gameObject.CompareTag("Left Hand") || other.gameObject.CompareTag("Right Hand")))
         {
             button.transform.localPosition = new Vector3(0, 0.003f, 0);
             presser = other.gameObject;
@@ -43,7 +46,7 @@ public class ButtonSpawn : MonoBehaviour
 
     public void SpawnObject()
     {
-        if (!instantiateLimit.isInstantiated)
+        if (!instantiateLimit.isInstantiated && printerDamage.printerHealth > 0)
         {
             GameObject newObject = Instantiate(prefabObject, spawnPoint.transform.position, Quaternion.identity);
         }

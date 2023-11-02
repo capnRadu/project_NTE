@@ -1,22 +1,22 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.XR.Content.Interaction;
 
 public class InstantiateLimit : MonoBehaviour
 {
     public bool isInstantiated = false;
-
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
-        if (collision.gameObject.layer == 8)
+        if (other.gameObject.layer == 8)
         {
             isInstantiated = true;
         }
     }
 
-    private void OnCollisionExit(Collision collision)
+    private void OnTriggerExit(Collider other)
     {
-        if (collision.gameObject.layer == 8)
+        if (other.gameObject.layer == 8)
         {
             isInstantiated = false;
         }
