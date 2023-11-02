@@ -8,7 +8,7 @@ public class PrinterDamage : MonoBehaviour
 {
     [SerializeField] private Image backgroundBar;
     [SerializeField] private Image timerBar;
-    public float maxHealth = 60f;
+    public float maxHealth = 100f;
     public float printerHealth;
 
     [SerializeField] private ParticleSystem smokeParticles;
@@ -51,7 +51,7 @@ public class PrinterDamage : MonoBehaviour
         {
             if (other.gameObject.GetComponent<CleaningObject>().isMoving)
             {
-                printerHealth += Time.deltaTime * 5;
+                printerHealth += Time.deltaTime * 15;
                 timerBar.fillAmount = printerHealth / maxHealth;
             }
         }
