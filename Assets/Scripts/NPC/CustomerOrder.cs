@@ -171,7 +171,7 @@ public class CustomerOrder : MonoBehaviour
                     var _canvas2 = GameObject.Find("Canvas 2").GetComponent<Canvas>();
                     _text = Instantiate(customerText, this.transform.position, Quaternion.identity) as TextMeshProUGUI;
 
-                    // Check ordered recipe and display text with each number of required ingredients
+                    // Check first ordered recipe and display text with each number of required ingredients
                     if (orderRecipesIndex.Length == 7)
                     {
                         for (int i = 0; i < orderRecipesIndex.Length; i++)
@@ -238,7 +238,7 @@ public class CustomerOrder : MonoBehaviour
 
             case "order":
             case "order 2":
-                // Check if the timer has ran out before the order was received
+                // Check if the timer has ran out before the complete order was received
                 if (newTimer && newTimer.GetComponent<TimerBar>().timerBar.fillAmount <= 0)
                 {
                     state = "destroy";
@@ -270,7 +270,7 @@ public class CustomerOrder : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        // Check if the ordered recipe has all the required ingredients
+        // Check if the first ordered recipe has all the required ingredients
         if (state == "order")
         {
             if ( (collision.gameObject.CompareTag("Bottom Bun") && orderRecipesIndex.Length == 7 && currentRecipeIndex == collision.gameObject.GetComponent<Recipe>().orderIndex) ||
@@ -339,6 +339,7 @@ public class CustomerOrder : MonoBehaviour
             }
         }
 
+        // Check if the second ordered recipe has all the required ingredients
         if (state == "order 2")
         {
             if ( (collision.gameObject.CompareTag("Bottom Bun") && orderRecipesIndex2.Length == 7 && currentRecipeIndex2 == collision.gameObject.GetComponent<Recipe>().orderIndex) ||
