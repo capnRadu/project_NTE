@@ -48,8 +48,8 @@ public class CustomerOrder : MonoBehaviour
             }
         }
 
-        // Pick a random order between hotdog or hamburger
-        int randomOrder = Random.Range(1, 3);
+        // Pick a random order between hotdog / hamburger / today's special (custom player recipe)
+        int randomOrder = Random.Range(1, 4);
         // Cycle through the recipe ingredients, pick a random number for them, and generate final order index
         switch (randomOrder)
         {
@@ -86,6 +86,9 @@ public class CustomerOrder : MonoBehaviour
                         currentRecipeIndex += orderRecipesIndex[i];
                     }
                 }
+                break;
+            case 3: // Today's special
+                orderRecipesIndex = new int[0];
                 break;
         }
         Debug.Log(currentRecipeIndex);
@@ -168,6 +171,10 @@ public class CustomerOrder : MonoBehaviour
                             }
                         }
                     }
+                    else if (orderRecipesIndex.Length == 0)
+                    {
+                        _text.text += "Today's Special";
+                    }
 
                     _text.transform.SetParent(_canvas2.transform, true);
                     _text.transform.localScale = Vector3.one;
@@ -217,13 +224,17 @@ public class CustomerOrder : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         // Check if the ordered recipe has all the required ingredients
-        if ((collision.gameObject.CompareTag("Bottom Bun") && state == "order" && orderRecipesIndex.Length == 7 && currentRecipeIndex == collision.gameObject.GetComponent<Recipe>().orderIndex) ||
-            (collision.gameObject.CompareTag("Hotdog Bun") && state == "order" && orderRecipesIndex.Length == 2 && currentRecipeIndex == collision.gameObject.GetComponent<HotdogRecipe>().orderIndex))
+        if (state == "order")
         {
-            currentText.text = ":)";
-            Destroy(collision.gameObject);
-            StartCoroutine(ChangeState("destroy", true, true));
-            Destroy(newTimer.gameObject);
+            if ( (collision.gameObject.CompareTag("Bottom Bun") && orderRecipesIndex.Length == 7 && currentRecipeIndex == collision.gameObject.GetComponent<Recipe>().orderIndex) ||
+            (collision.gameObject.CompareTag("Hotdog Bun") && orderRecipesIndex.Length == 2 && currentRecipeIndex == collision.gameObject.GetComponent<HotdogRecipe>().orderIndex) ||
+            ((collision.gameObject.CompareTag("Bottom Bun") || collision.gameObject.CompareTag("Hotdog Bun")) && orderRecipesIndex.Length == 0) )
+            {
+                currentText.text = ":)";
+                Destroy(collision.gameObject);
+                StartCoroutine(ChangeState("destroy", true, true));
+                Destroy(newTimer.gameObject);
+            }
         }
     }
 
