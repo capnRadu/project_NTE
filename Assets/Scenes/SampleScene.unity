@@ -7013,7 +7013,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 32
+    m_Bits: 512
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -9371,7 +9371,7 @@ GameObject:
   - component: {fileID: 718998570}
   - component: {fileID: 718998572}
   - component: {fileID: 718998571}
-  m_Layer: 5
+  m_Layer: 9
   m_Name: Text (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10095,7 +10095,7 @@ GameObject:
   - component: {fileID: 870553509}
   - component: {fileID: 870553507}
   - component: {fileID: 870553506}
-  m_Layer: 5
+  m_Layer: 9
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -17062,7 +17062,7 @@ GameObject:
   - component: {fileID: 1238058550}
   - component: {fileID: 1238058552}
   - component: {fileID: 1238058551}
-  m_Layer: 5
+  m_Layer: 9
   m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -18770,7 +18770,7 @@ GameObject:
   - component: {fileID: 1572313061}
   - component: {fileID: 1572313060}
   - component: {fileID: 1572313059}
-  m_Layer: 5
+  m_Layer: 9
   m_Name: Ad Popup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19258,7 +19258,7 @@ GameObject:
   - component: {fileID: 1750347450}
   - component: {fileID: 1750347449}
   - component: {fileID: 1750347451}
-  m_Layer: 5
+  m_Layer: 9
   m_Name: Panel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19429,7 +19429,7 @@ GameObject:
   - component: {fileID: 1762567142}
   - component: {fileID: 1762567144}
   - component: {fileID: 1762567143}
-  m_Layer: 5
+  m_Layer: 9
   m_Name: Text (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -20937,7 +20937,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 471
+    m_Bits: 503
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0

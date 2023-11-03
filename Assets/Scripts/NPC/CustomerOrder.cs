@@ -10,10 +10,13 @@ public class CustomerOrder : MonoBehaviour
     // Text
     [SerializeField] private TextMeshProUGUI customerText;
     private TextMeshProUGUI currentText;
+    private TextMeshProUGUI _text;
 
     // Order index number
     private int[] orderRecipesIndex;
     private int currentRecipeIndex = 0;
+    private int[] orderRecipesIndex2;
+    private int currentRecipeIndex2 = 0;
 
     // Movement
     [SerializeField] private Transform[] waypoints;
@@ -48,8 +51,9 @@ public class CustomerOrder : MonoBehaviour
             }
         }
 
-        // Pick a random order between hotdog / hamburger / today's special (custom player recipe)
+        // Pick two random orders between hotdog / hamburger / today's special (custom player recipe)
         int randomOrder = Random.Range(1, 4);
+        int randomOrder2 = Random.Range(0, 3);
         // Cycle through the recipe ingredients, pick a random number for them, and generate final order index
         switch (randomOrder)
         {
@@ -88,10 +92,52 @@ public class CustomerOrder : MonoBehaviour
                 }
                 break;
             case 3: // Today's special
-                orderRecipesIndex = new int[0];
+                orderRecipesIndex = new int[1];
+                break;
+        }
+
+        switch (randomOrder2)
+        {
+            case 0: // Nothing
+                orderRecipesIndex2 = new int[0];
+                break;
+            case 1: // Hamburger
+                orderRecipesIndex2 = new int[7];
+                for (int i = 0; i < orderRecipesIndex2.Length; i++)
+                {
+                    if (i == 0)
+                    {
+                        orderRecipesIndex2[i] = 1;
+                        currentRecipeIndex2 += orderRecipesIndex2[i];
+                    }
+                    else
+                    {
+                        orderRecipesIndex2[i] = Random.Range(0, 4);
+                        currentRecipeIndex2 *= 10;
+                        currentRecipeIndex2 += orderRecipesIndex2[i];
+                    }
+                }
+                break;
+            case 2: // Hotdog
+                orderRecipesIndex2 = new int[2];
+                for (int i = 0; i < orderRecipesIndex2.Length; i++)
+                {
+                    if (i == 0)
+                    {
+                        orderRecipesIndex2[i] = 1;
+                        currentRecipeIndex2 += orderRecipesIndex2[i];
+                    }
+                    else
+                    {
+                        orderRecipesIndex2[i] = Random.Range(1, 4);
+                        currentRecipeIndex2 *= 10;
+                        currentRecipeIndex2 += orderRecipesIndex2[i];
+                    }
+                }
                 break;
         }
         Debug.Log(currentRecipeIndex);
+        Debug.Log(currentRecipeIndex2);
 
         StartCoroutine(ChangeState("spawn", true, false));
 
@@ -123,7 +169,7 @@ public class CustomerOrder : MonoBehaviour
                 if (Vector3.Distance(transform.position, waypoints[0].transform.position) < .2f)
                 {
                     var _canvas2 = GameObject.Find("Canvas 2").GetComponent<Canvas>();
-                    var _text = Instantiate(customerText, this.transform.position, Quaternion.identity) as TextMeshProUGUI;
+                    _text = Instantiate(customerText, this.transform.position, Quaternion.identity) as TextMeshProUGUI;
 
                     // Check ordered recipe and display text with each number of required ingredients
                     if (orderRecipesIndex.Length == 7)
@@ -171,7 +217,7 @@ public class CustomerOrder : MonoBehaviour
                             }
                         }
                     }
-                    else if (orderRecipesIndex.Length == 0)
+                    else if (orderRecipesIndex.Length == 1)
                     {
                         _text.text += "Today's Special";
                     }
@@ -191,6 +237,7 @@ public class CustomerOrder : MonoBehaviour
                 break;
 
             case "order":
+            case "order 2":
                 // Check if the timer has ran out before the order was received
                 if (newTimer && newTimer.GetComponent<TimerBar>().timerBar.fillAmount <= 0)
                 {
@@ -228,7 +275,74 @@ public class CustomerOrder : MonoBehaviour
         {
             if ( (collision.gameObject.CompareTag("Bottom Bun") && orderRecipesIndex.Length == 7 && currentRecipeIndex == collision.gameObject.GetComponent<Recipe>().orderIndex) ||
             (collision.gameObject.CompareTag("Hotdog Bun") && orderRecipesIndex.Length == 2 && currentRecipeIndex == collision.gameObject.GetComponent<HotdogRecipe>().orderIndex) ||
-            ((collision.gameObject.CompareTag("Bottom Bun") || collision.gameObject.CompareTag("Hotdog Bun")) && orderRecipesIndex.Length == 0) )
+            ((collision.gameObject.CompareTag("Bottom Bun") || collision.gameObject.CompareTag("Hotdog Bun")) && orderRecipesIndex.Length == 1) )
+            {
+                currentText.text = ":)";
+                Destroy(collision.gameObject);
+
+                // Check if there is a second order
+                if (orderRecipesIndex2.Length == 0)
+                {
+                    StartCoroutine(ChangeState("destroy", true, true));
+                    Destroy(newTimer.gameObject);
+                }
+                else
+                {
+                    // Check the second ordered recipe and display text with each number of required ingredients
+                    if (orderRecipesIndex2.Length == 7)
+                    {
+                        for (int i = 0; i < orderRecipesIndex2.Length; i++)
+                        {
+                            switch (i)
+                            {
+                                case 0:
+                                    _text.text = "Bottom Bun x" + orderRecipesIndex2[i] + " ";
+                                    break;
+                                case 1:
+                                    _text.text += "Patty x" + orderRecipesIndex2[i] + "\n";
+                                    break;
+                                case 2:
+                                    _text.text += "Cheese x" + orderRecipesIndex2[i] + " ";
+                                    break;
+                                case 3:
+                                    _text.text += "Tomatoes x" + orderRecipesIndex2[i] + "\n";
+                                    break;
+                                case 4:
+                                    _text.text += "Onions x" + orderRecipesIndex2[i] + "\n";
+                                    break;
+                                case 5:
+                                    _text.text += "Salad x" + orderRecipesIndex2[i] + "\n";
+                                    break;
+                                case 6:
+                                    _text.text += "Top Bun x" + orderRecipesIndex2[i] + "\n";
+                                    break;
+                            }
+                        }
+                    }
+                    else if (orderRecipesIndex2.Length == 2)
+                    {
+                        for (int i = 0; i < orderRecipesIndex2.Length; i++)
+                        {
+                            switch (i)
+                            {
+                                case 0:
+                                    _text.text += "Hotdog Bun x" + orderRecipesIndex2[i] + " ";
+                                    break;
+                                case 1:
+                                    _text.text += "Sausage x" + orderRecipesIndex2[i] + "\n";
+                                    break;
+                            }
+                        }
+                    }
+                    StartCoroutine(ChangeState("order 2", false, false));
+                }
+            }
+        }
+
+        if (state == "order 2")
+        {
+            if ( (collision.gameObject.CompareTag("Bottom Bun") && orderRecipesIndex2.Length == 7 && currentRecipeIndex2 == collision.gameObject.GetComponent<Recipe>().orderIndex) ||
+            (collision.gameObject.CompareTag("Hotdog Bun") && orderRecipesIndex2.Length == 2 && currentRecipeIndex2 == collision.gameObject.GetComponent<HotdogRecipe>().orderIndex) )
             {
                 currentText.text = ":)";
                 Destroy(collision.gameObject);

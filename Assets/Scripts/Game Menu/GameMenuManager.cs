@@ -15,7 +15,7 @@ public class GameMenuManager : MonoBehaviour
 
     private void Start()
     {
-        InvokeRepeating("DisplayAd", 5f, 10f);
+        InvokeRepeating("DisplayAd", 10f, 30f);
     }
 
     void Update()
