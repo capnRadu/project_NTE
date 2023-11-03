@@ -1,9 +1,6 @@
 using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.Video;
 
 public class CustomerOrder : MonoBehaviour
 {
@@ -11,6 +8,9 @@ public class CustomerOrder : MonoBehaviour
     [SerializeField] private TextMeshProUGUI customerText;
     private TextMeshProUGUI currentText;
     private TextMeshProUGUI _text;
+
+    // HUD Canvas
+    GameMenuManager menuManager;
 
     // Order index number
     private int[] orderRecipesIndex;
@@ -144,6 +144,7 @@ public class CustomerOrder : MonoBehaviour
         customersList = GameObject.FindWithTag("Spawner").GetComponent<CustomerSpawner>();
         customerIndex = customersList.customers.Count - 1;
 
+        menuManager = GameObject.Find("Canvas HUD").GetComponent<GameMenuManager>();
         timerBarScript = timerBar.GetComponent<TimerBar>();
     }
 
@@ -166,7 +167,7 @@ public class CustomerOrder : MonoBehaviour
                 }
 
                 // Check if NPC reached the counter
-                if (Vector3.Distance(transform.position, waypoints[0].transform.position) < .2f)
+                if (Vector3.Distance(transform.position, waypoints[0].transform.position) < .03f)
                 {
                     var _canvas2 = GameObject.Find("Canvas 2").GetComponent<Canvas>();
                     _text = Instantiate(customerText, this.transform.position, Quaternion.identity) as TextMeshProUGUI;
@@ -242,9 +243,10 @@ public class CustomerOrder : MonoBehaviour
                 if (newTimer && newTimer.GetComponent<TimerBar>().timerBar.fillAmount <= 0)
                 {
                     state = "destroy";
-                    modelAnimator.SetBool("isWalking", true);
                     this.transform.rotation = Quaternion.Euler(0, -90, 0);
+                    modelAnimator.SetBool("isWalking", true);
                     currentText.text = ":(";
+                    menuManager.starsNumber--;
                     Destroy(newTimer.gameObject);
                 }
                 break;
@@ -275,9 +277,10 @@ public class CustomerOrder : MonoBehaviour
         {
             if ( (collision.gameObject.CompareTag("Bottom Bun") && orderRecipesIndex.Length == 7 && currentRecipeIndex == collision.gameObject.GetComponent<Recipe>().orderIndex) ||
             (collision.gameObject.CompareTag("Hotdog Bun") && orderRecipesIndex.Length == 2 && currentRecipeIndex == collision.gameObject.GetComponent<HotdogRecipe>().orderIndex) ||
-            ((collision.gameObject.CompareTag("Bottom Bun") || collision.gameObject.CompareTag("Hotdog Bun")) && orderRecipesIndex.Length == 1) )
+            (collision.gameObject.layer == 8 && orderRecipesIndex.Length == 1) )
             {
                 currentText.text = ":)";
+                menuManager.starsNumber += Mathf.Round(newTimer.GetComponent<TimerBar>().timerBar.fillAmount * 100f) / 100f;
                 Destroy(collision.gameObject);
 
                 // Check if there is a second order
@@ -288,6 +291,9 @@ public class CustomerOrder : MonoBehaviour
                 }
                 else
                 {
+                    // Reset timer
+                    newTimer.GetComponent<TimerBar>().timeLeft = newTimer.GetComponent<TimerBar>().maxTime;
+
                     // Check the second ordered recipe and display text with each number of required ingredients
                     if (orderRecipesIndex2.Length == 7)
                     {
@@ -326,7 +332,7 @@ public class CustomerOrder : MonoBehaviour
                             switch (i)
                             {
                                 case 0:
-                                    _text.text += "Hotdog Bun x" + orderRecipesIndex2[i] + " ";
+                                    _text.text = "Hotdog Bun x" + orderRecipesIndex2[i] + " ";
                                     break;
                                 case 1:
                                     _text.text += "Sausage x" + orderRecipesIndex2[i] + "\n";
@@ -337,6 +343,11 @@ public class CustomerOrder : MonoBehaviour
                     StartCoroutine(ChangeState("order 2", false, false));
                 }
             }
+            else
+            {
+                // Reduce stars if order is wrong
+                menuManager.starsNumber--;
+            }
         }
 
         // Check if the second ordered recipe has all the required ingredients
@@ -346,9 +357,15 @@ public class CustomerOrder : MonoBehaviour
             (collision.gameObject.CompareTag("Hotdog Bun") && orderRecipesIndex2.Length == 2 && currentRecipeIndex2 == collision.gameObject.GetComponent<HotdogRecipe>().orderIndex) )
             {
                 currentText.text = ":)";
+                menuManager.starsNumber += Mathf.Round(newTimer.GetComponent<TimerBar>().timerBar.fillAmount * 100f) / 100f;
                 Destroy(collision.gameObject);
                 StartCoroutine(ChangeState("destroy", true, true));
                 Destroy(newTimer.gameObject);
+            }
+            else
+            {
+                // Reduce stars if order is wrong
+                menuManager.starsNumber--;
             }
         }
     }

@@ -9,7 +9,7 @@ public class TimerBar : MonoBehaviour
     public Image timerBar;
 
     public float maxTime = 50f;
-    private float timeLeft;
+    public float timeLeft;
 
     private void Start()
     {
@@ -23,9 +23,6 @@ public class TimerBar : MonoBehaviour
         {
             timeLeft -= Time.deltaTime;
             timerBar.fillAmount = timeLeft / maxTime;
-        } else
-        {
-            //
         }
     }
 }
