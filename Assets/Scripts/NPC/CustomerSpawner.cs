@@ -20,7 +20,7 @@ public class CustomerSpawner : MonoBehaviour
 
         if (getCustomersCount.Length < 4)
         {
-            GameObject newCustomer = (GameObject)Instantiate(customerPrefab, transform.position, Quaternion.identity);
+            GameObject newCustomer = (GameObject)Instantiate(customerPrefab, transform.position, Quaternion.Euler(0, -90, 0));
             customers.Add(newCustomer);
         }
     }

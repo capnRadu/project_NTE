@@ -246,6 +246,7 @@ public class CustomerOrder : MonoBehaviour
                     newTimer.transform.localScale = Vector3.one;
 
                     state = "order";
+                    transform.rotation = Quaternion.Euler(0, 0, 0);
                     modelAnimator.SetBool("isWalking", false);
                 }
                 break;

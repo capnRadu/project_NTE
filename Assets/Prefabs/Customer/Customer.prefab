@@ -140,12 +140,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   customerText: {fileID: 8173112237792488759, guid: 6b06e15d68228fc45a57376d4577f63e, type: 3}
-  orderRecipes:
-  - Cube
-  - Sphere
-  - Cylinder
-  - Capsule
-  orderRecipesIndex: 00000000000000000000000000000000000000000000000000000000
   waypoints:
   - {fileID: 3590984619926047015, guid: 45348899bcc9e564e8df5d306db31ffd, type: 3}
   - {fileID: 1521103161109537313, guid: b156c511d5bd25c49a7641a47b0de710, type: 3}

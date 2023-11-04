@@ -16,6 +16,8 @@ public class GameMenuManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI starsText;
     public float starsNumber = 0f;
 
+    private float skyboxSpeed = 0.5f;
+
     private void Start()
     {
         InvokeRepeating("DisplayAd", 10f, 30f);
@@ -54,6 +56,8 @@ public class GameMenuManager : MonoBehaviour
         {
             starsText.color = Color.white;
         }
+
+        RenderSettings.skybox.SetFloat("_Rotation", Time.time * skyboxSpeed);
     }
 
     private void DisplayAd()
