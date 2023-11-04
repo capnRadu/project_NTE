@@ -8,13 +8,15 @@ public class TimerBar : MonoBehaviour
 {
     public Image timerBar;
 
-    public float maxTime = 50f;
+    public float maxTime;
     public float timeLeft;
 
     private void Start()
     {
         timerBar = GetComponent<Image>();
         timeLeft = maxTime;
+
+        Debug.Log("time left " + timeLeft);
     }
 
     private void Update()

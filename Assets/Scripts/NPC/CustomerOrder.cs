@@ -30,9 +30,10 @@ public class CustomerOrder : MonoBehaviour
 
     // Timer
     [SerializeField] private GameObject timerBar;
-    TimerBar timerBarScript;
     private GameObject newTimer;
-    private float orderTimer = 20f;
+    // Base orders timer
+    private float orderTimer1 = 50f;
+    private float orderTimer2 = 50f;
 
     private void Start()
     {
@@ -55,6 +56,7 @@ public class CustomerOrder : MonoBehaviour
         int randomOrder = Random.Range(1, 4);
         int randomOrder2 = Random.Range(0, 3);
         // Cycle through the recipe ingredients, pick a random number for them, and generate final order index
+        // Increase timer based on order complexity
         switch (randomOrder)
         {
             case 1: // Hamburger
@@ -71,6 +73,7 @@ public class CustomerOrder : MonoBehaviour
                         orderRecipesIndex[i] = Random.Range(0, 4);
                         currentRecipeIndex *= 10;
                         currentRecipeIndex += orderRecipesIndex[i];
+                        orderTimer1 += orderRecipesIndex[i];
                     }
                 }
                 break;
@@ -88,6 +91,7 @@ public class CustomerOrder : MonoBehaviour
                         orderRecipesIndex[i] = Random.Range(1, 4);
                         currentRecipeIndex *= 10;
                         currentRecipeIndex += orderRecipesIndex[i];
+                        orderTimer1 += orderRecipesIndex[i];
                     }
                 }
                 break;
@@ -115,6 +119,7 @@ public class CustomerOrder : MonoBehaviour
                         orderRecipesIndex2[i] = Random.Range(0, 4);
                         currentRecipeIndex2 *= 10;
                         currentRecipeIndex2 += orderRecipesIndex2[i];
+                        orderTimer2 += orderRecipesIndex2[i];
                     }
                 }
                 break;
@@ -132,6 +137,7 @@ public class CustomerOrder : MonoBehaviour
                         orderRecipesIndex2[i] = Random.Range(1, 4);
                         currentRecipeIndex2 *= 10;
                         currentRecipeIndex2 += orderRecipesIndex2[i];
+                        orderTimer2 += orderRecipesIndex2[i];
                     }
                 }
                 break;
@@ -145,7 +151,6 @@ public class CustomerOrder : MonoBehaviour
         customerIndex = customersList.customers.Count - 1;
 
         menuManager = GameObject.Find("Canvas HUD").GetComponent<GameMenuManager>();
-        timerBarScript = timerBar.GetComponent<TimerBar>();
     }
 
     private void Update() 
@@ -228,7 +233,7 @@ public class CustomerOrder : MonoBehaviour
                     currentText = _text;
 
                     newTimer = Instantiate(timerBar, this.transform.position + new Vector3(0f, 1.25f, 0f), Quaternion.identity) as GameObject;
-                    // timerBarScript.maxTime = orderTimer;
+                    newTimer.GetComponent<TimerBar>().maxTime = orderTimer1;
                     newTimer.transform.SetParent(_canvas2.transform, true);
                     newTimer.transform.localScale = Vector3.one;
 
@@ -292,6 +297,7 @@ public class CustomerOrder : MonoBehaviour
                 else
                 {
                     // Reset timer
+                    newTimer.GetComponent<TimerBar>().maxTime = orderTimer2;
                     newTimer.GetComponent<TimerBar>().timeLeft = newTimer.GetComponent<TimerBar>().maxTime;
 
                     // Check the second ordered recipe and display text with each number of required ingredients

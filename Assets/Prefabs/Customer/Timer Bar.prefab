@@ -89,4 +89,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timerBar: {fileID: 0}
-  maxTime: 50
+  maxTime: 0
+  timeLeft: 0
