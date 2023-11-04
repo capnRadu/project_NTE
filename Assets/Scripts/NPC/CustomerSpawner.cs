@@ -6,6 +6,7 @@ public class CustomerSpawner : MonoBehaviour
 {
     [SerializeField] private GameObject customerPrefab;
     public List<GameObject> customers = new List<GameObject>();
+    public int customerNumber = 0;
 
     void Start()
     {
@@ -14,6 +15,7 @@ public class CustomerSpawner : MonoBehaviour
 
     private void SpawnCustomer()
     {
+        customerNumber++;
         var getCustomersCount = GameObject.FindGameObjectsWithTag("Customer");
 
         if (getCustomersCount.Length < 4)

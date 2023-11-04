@@ -37,6 +37,10 @@ public class CustomerOrder : MonoBehaviour
 
     private void Start()
     {
+        // Find how many customers are spawned
+        customersList = GameObject.FindWithTag("Spawner").GetComponent<CustomerSpawner>();
+        customerIndex = customersList.customers.Count - 1;
+
         // Pick a random NPC model and keep a reference to its animator
         int randomModelNumber = Random.Range(0, transform.childCount);
         for (int j = 0; j < transform.childCount; j++)
@@ -54,7 +58,14 @@ public class CustomerOrder : MonoBehaviour
 
         // Pick two random orders between hotdog / hamburger / today's special (custom player recipe)
         int randomOrder = Random.Range(1, 4);
-        int randomOrder2 = Random.Range(0, 3);
+
+        // Increase difficulty: if there have been more than 9 customers, start generating the second order
+        int randomOrder2 = 0;
+        if (customersList.customerNumber > 9)
+        {
+            randomOrder2 = Random.Range(0, 3);
+        }
+        
         // Cycle through the recipe ingredients, pick a random number for them, and generate final order index
         // Increase timer based on order complexity
         switch (randomOrder)
@@ -146,9 +157,6 @@ public class CustomerOrder : MonoBehaviour
         Debug.Log(currentRecipeIndex2);
 
         StartCoroutine(ChangeState("spawn", true, false));
-
-        customersList = GameObject.FindWithTag("Spawner").GetComponent<CustomerSpawner>();
-        customerIndex = customersList.customers.Count - 1;
 
         menuManager = GameObject.Find("Canvas HUD").GetComponent<GameMenuManager>();
     }
