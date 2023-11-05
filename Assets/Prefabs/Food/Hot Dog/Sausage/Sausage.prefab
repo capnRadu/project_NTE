@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 3258829405267658811}
   - component: {fileID: 3217783510875239960}
   - component: {fileID: 3901621441373150627}
+  - component: {fileID: 3018688873305722284}
   m_Layer: 8
   m_Name: Sausage
   m_TagString: Sausage
@@ -248,3 +249,15 @@ MonoBehaviour:
   m_StartingSingleGrabTransformers: []
   m_StartingMultipleGrabTransformers: []
   m_AddDefaultGrabTransformers: 1
+--- !u!114 &3018688873305722284
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4548796981105012582}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 93847241abd085e4391abc92040d24f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

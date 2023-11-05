@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 8056687175477771992}
   - component: {fileID: 6545502806311722532}
   - component: {fileID: 4493034069972145351}
+  - component: {fileID: 2333135516982525752}
   m_Layer: 8
   m_Name: Cheese 1
   m_TagString: Cheese
@@ -248,3 +249,15 @@ MonoBehaviour:
   m_StartingSingleGrabTransformers: []
   m_StartingMultipleGrabTransformers: []
   m_AddDefaultGrabTransformers: 1
+--- !u!114 &2333135516982525752
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5873015446300883693}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 93847241abd085e4391abc92040d24f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

@@ -38,7 +38,7 @@ public class PrinterDamage : MonoBehaviour
 
     private void Update()
     {
-        if (customerSpawner.customerNumber > 25 && !damageBar)
+        if (customerSpawner.customerNumber > 14 && !damageBar)
         {
             backgroundBar.gameObject.SetActive(true);
             damageBar = true;

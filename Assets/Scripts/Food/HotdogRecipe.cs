@@ -14,6 +14,8 @@ public class HotdogRecipe : MonoBehaviour
     private void Start()
     {
         spacing = GetComponent<BoxCollider>().size.y / 2;
+
+        Invoke("DestroyObject", 120);
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -38,5 +40,10 @@ public class HotdogRecipe : MonoBehaviour
         spacing += collision.gameObject.GetComponent<BoxCollider>().size.y / 2;
 
         Destroy(collision.gameObject);
+    }
+
+    private void DestroyObject()
+    {
+        Destroy(gameObject);
     }
 }

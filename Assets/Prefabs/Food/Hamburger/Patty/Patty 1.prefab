@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 1231582519255664046}
   - component: {fileID: 6625930767303728897}
   - component: {fileID: 6165405737850987471}
+  - component: {fileID: -3235679905281781983}
   m_Layer: 8
   m_Name: Patty 1
   m_TagString: Patty
@@ -248,3 +249,15 @@ MonoBehaviour:
   m_StartingSingleGrabTransformers: []
   m_StartingMultipleGrabTransformers: []
   m_AddDefaultGrabTransformers: 1
+--- !u!114 &-3235679905281781983
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2971179629025745461}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 93847241abd085e4391abc92040d24f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

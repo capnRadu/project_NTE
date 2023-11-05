@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 4560456039789667046}
   - component: {fileID: -1553174523727365540}
   - component: {fileID: 1045619696573908506}
+  - component: {fileID: -4090318538915047839}
   m_Layer: 8
   m_Name: Onions 1
   m_TagString: Onions
@@ -249,3 +250,15 @@ MonoBehaviour:
   m_StartingSingleGrabTransformers: []
   m_StartingMultipleGrabTransformers: []
   m_AddDefaultGrabTransformers: 1
+--- !u!114 &-4090318538915047839
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6151581266962980329}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 93847241abd085e4391abc92040d24f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
