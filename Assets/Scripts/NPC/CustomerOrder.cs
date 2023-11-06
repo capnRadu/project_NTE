@@ -294,6 +294,7 @@ public class CustomerOrder : MonoBehaviour
             (collision.gameObject.layer == 8 && orderRecipesIndex.Length == 1) )
             {
                 currentText.text = ":)";
+                GameObject.Find("satisfiedNpcSFX").GetComponent<AudioSource>().Play();
                 menuManager.starsNumber += Mathf.Round(newTimer.GetComponent<TimerBar>().timerBar.fillAmount * 100f) / 100f;
                 Destroy(collision.gameObject);
 
@@ -372,6 +373,7 @@ public class CustomerOrder : MonoBehaviour
             (collision.gameObject.CompareTag("Hotdog Bun") && orderRecipesIndex2.Length == 2 && currentRecipeIndex2 == collision.gameObject.GetComponent<HotdogRecipe>().orderIndex) )
             {
                 currentText.text = ":)";
+                GameObject.Find("satisfiedNpcSFX").GetComponent<AudioSource>().Play();
                 menuManager.starsNumber += Mathf.Round(newTimer.GetComponent<TimerBar>().timerBar.fillAmount * 100f) / 100f;
                 Destroy(collision.gameObject);
                 StartCoroutine(ChangeState("destroy", true, true));

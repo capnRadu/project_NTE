@@ -44,11 +44,12 @@ public class ButtonSpawn : MonoBehaviour
         }
     }
 
-    public void SpawnObject()
+    public void SpawnObject(AudioSource soundEffect)
     {
         if (!instantiateLimit.isInstantiated && printerDamage.printerHealth > 0)
         {
             GameObject newObject = Instantiate(prefabObject, spawnPoint.transform.position, Quaternion.identity);
+            soundEffect.Play();
         }
     }
 }
